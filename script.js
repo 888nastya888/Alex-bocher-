@@ -30,9 +30,10 @@ foods.forEach(food => {
     <span>${food.name}</span>
   `;
 
-  card.addEventListener("dragstart", () => {
+  card.addEventListener("dragstart", (e) => {
     dragged = card;
-  });
+    e.dataTransfer.setData("text/plain", food.id);
+});
 
   foodsContainer.appendChild(card);
 });
