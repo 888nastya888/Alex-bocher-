@@ -54,14 +54,23 @@ document.querySelectorAll(".dropzone").forEach(box=>{
 
     });
 
-    box.addEventListener("drop",e=>{
+    box.addEventListener("drop", e => {
 
-        e.preventDefault();
+    e.preventDefault();
 
-        if(dragged){
+    if (!dragged) return;
 
-            box.appendChild(dragged);
+    const copy = dragged.cloneNode(true);
 
+    copy.draggable = false;
+
+    copy.addEventListener("click", () => {
+        copy.remove();
+    });
+
+    box.appendChild(copy);
+
+});
         }
 
     });
