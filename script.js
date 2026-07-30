@@ -1,119 +1,90 @@
 const foods = [
-  { id: "tuna", name: "טונה עם מיונז", image: "images/tuna.png" },
-  { id: "cornflakes", name: "קורנפלקס", image: "images/cornflakes.png" },
-  { id: "actimel", name: "אקטימל", image: "images/actimel.png" },
-  { id: "omelet", name: "חביטה", image: "images/omelet.png" },
-  { id: "egg", name: "ביצה קשה", image: "images/egg.png" },
+  { id: "tuna", name: "טונה", image: "images/tuna.png" },
+  { id: "egg", name: "ביצה", image: "images/egg.png" },
+  { id: "omelet", name: "חביתה", image: "images/omelet.png" },
   { id: "bread", name: "לחם", image: "images/bread.png" },
-  { id: "white-cheese", name: "גבינה לבנה", image: "images/white-cheese.png" },
+  { id: "toast", name: "טוסט", image: "images/toast.png" },
   { id: "yellow-cheese", name: "גבינה צהובה", image: "images/yellow-cheese.png" },
+  { id: "white-cheese", name: "גבינה לבנה", image: "images/white-cheese.png" },
   { id: "cottage", name: "קוטג'", image: "images/cottage.png" },
-  { id: "toast", name: "טוסט עם גבינה צהובה", image: "images/toast.png" },
+  { id: "peanut-butter", name: "חמאת בוטנים", image: "images/peanut-butter.png" },
+  { id: "cornflakes", name: "קורנפלקס", image: "images/cornflakes.png" },
   { id: "choco", name: "שוקו", image: "images/choco.png" },
-  { id: "peanut", name: "חמאת בוטנים", image: "images/peanut-butter.png" }
+  { id: "actimel", name: "אקטימל", image: "images/actimel.png" }
 ];
 
 const foodsContainer = document.getElementById("foods");
-
-foods.forEach(food => {
-
-    const card = document.createElement("div");
-
-    card.className = "food-card";
-
-    card.draggable = true;
-
-    card.innerHTML = `
-        <img src="${food.image}" alt="${food.name}">
-        <span>${food.name}</span>
-    `;
-
-    card.dataset.food = food.id;
-
-    foodsContainer.appendChild(card);
-
-});
+const morningBox = document.getElementById("morningBox");
+const snackBox = document.getElementById("snackBox");
 
 let dragged = null;
 
-document.addEventListener("dragstart", e => {
+foods.forEach(food => {
+  const card = document.createElement("div");
+  card.className = "food-card";
+  card.draggable = true;
+  card.dataset.food = food.id;
 
-    if(e.target.classList.contains("food-card")){
+  card.innerHTML = `
+    <img src="${food.image}" alt="${food.name}">
+    <span>${food.name}</span>
+  `;
 
-        dragged = e.target;
+  card.addEventListener("dragstart", () => {
+    dragged = card;
+  });
 
-    }
-
+  foodsContainer.appendChild(card);
 });
 
-document.querySelectorAll(".dropzone").forEach(box=>{
+function setupDrop(box) {
 
-    box.addEventListener("dragover",e=>{
+  box.addEventListener("dragover", e => {
+    e.preventDefault();
+  });
 
-        e.preventDefault();
-
-    });
-
-    box.addEventListener("drop", e => {
-
+  box.addEventListener("drop", e => {
     e.preventDefault();
 
     if (!dragged) return;
+
+    const exists = [...box.querySelectorAll(".food-card")]
+      .some(card => card.dataset.food === dragged.dataset.food);
+
+    if (exists) return;
 
     const copy = dragged.cloneNode(true);
 
     copy.draggable = false;
 
     copy.addEventListener("click", () => {
-        copy.remove();
+      copy.remove();
     });
 
     box.appendChild(copy);
+    
+  });setupDrop(morningBox);
+setupDrop(snackBox);
 
+document.getElementById("resetBtn").addEventListener("click", () => {
+  morningBox.innerHTML = "";
+  snackBox.innerHTML = "";
+  document.getElementById("message").textContent = "";
 });
-        }
 
-    });
+document.getElementById("finishBtn").addEventListener("click", () => {
 
+  const total =
+    morningBox.querySelectorAll(".food-card").length +
+    snackBox.querySelectorAll(".food-card").length;
+
+  if (total === 0) {
+    alert("בחר לפחות מאכל אחד 😊");
+    return;
+  }
+
+  document.getElementById("message").textContent =
+    "כל הכבוד אלכס! 🎉 הקופסה מוכנה!";
 });
 
-document.getElementById("finishBtn").onclick=()=>{
-
-    const total=document.querySelectorAll(".dropzone .food-card").length;
-
-    if(total===0){
-
-        alert("בחר לפחות מאכל אחד 😊");
-
-        return;
-
-    }
-
-    alert("כל הכבוד אלכס! 🎉");
-
-};
-
-document.getElementById("resetBtn").onclick=()=>{
-
-    foodsContainer.innerHTML="";
-
-    foods.forEach(food=>{
-
-        const card=document.createElement("div");
-
-        card.className="food-card";
-
-        card.draggable=true;
-
-        card.innerHTML=`
-        <img src="${food.image}">
-        <span>${food.name}</span>
-        `;
-
-        foodsContainer.appendChild(card);
-
-    });
-
-    location.reload();
-
-};
+}
