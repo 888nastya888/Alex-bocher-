@@ -106,8 +106,7 @@ h1 {
     border-radius: 24px;
     padding: 16px;
     text-align: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,.
-12);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
     transition: .2s;
     cursor: grab;
 }
