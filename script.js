@@ -61,9 +61,13 @@ function setupDrop(box) {
       copy.remove();
     });
 
-    box.appendChild(copy);
-    
-  });setupDrop(morningBox);
+        box.appendChild(copy);
+
+  });
+
+}
+
+setupDrop(morningBox);
 setupDrop(snackBox);
 
 document.getElementById("resetBtn").addEventListener("click", () => {
