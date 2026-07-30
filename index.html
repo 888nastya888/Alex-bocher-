@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>אלכס בוחר</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="background">
+
+  <div class="cloud cloud1"></div>
+  <div class="cloud cloud2"></div>
+
+  <header>
+
+    <div class="sun">😊</div>
+
+    <h1>אלכס בוחר</h1>
+
+    <div class="welcome">
+      בוקר טוב אלכס!<br>
+      בחר מה תרצה בקופסת האוכל שלך
+    </div>
+
+  </header>
+
+  <main>
+
+    <section id="foods"></section>
+
+    <section class="lunchboxes">
+
+      <div class="box">
+        <h2>🌞 ארוחת בוקר</h2>
+        <div id="morningBox" class="dropzone"></div>
+      </div>
+
+      <div class="box">
+        <h2>🍏 ארוחת ביניים</h2>
+        <div id="snackBox" class="dropzone"></div>
+      </div>
+
+    </section>
+
+    <div class="buttons">
+
+      <button id="finishBtn">
+        ✅ סיימתי
+      </button>
+
+      <button id="resetBtn">
+        התחל מחדש
+      </button>
+
+    </div>
+
+    <div id="message"></div>
+
+  </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
